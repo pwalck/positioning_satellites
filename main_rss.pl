@@ -34,10 +34,19 @@ for (glob "*/*.json")
   $name = $data->{Satellite};
 
   $launched = $data->{"Launch (UTC)"} || $data->{"Launch date (UTC)"};
+
+  if ($retired = str2time($data->{Retired}))
+  {
+    $item = $feed->add_item(
+      title => "$name was retired",
+      description => "$system satellite $name was retired. It launched ". $launched .".",
+      pubDate => strftime($time_fmt, localtime $retired)
+    );
+  }
   
   $item = $feed->add_item(
     title => "$name launched",
-    description => "$system satellite $name was launched from ". $data->{"Launch site"},
+    description => "$system satellite $name was launched from ". $data->{"Launch site"} .".",
     pubDate => strftime($time_fmt, localtime str2time($launched))
   );
 }
