@@ -2,7 +2,7 @@ systems = gps glonass galileo beidou
 tables = $(systems:=.html)
 datafiles = $(tables:.html=.json)
 
-all: $(systems) clean
+all: $(systems) main.rss clean
 
 beidou.html: every/1hour
 	curl -s "https://en.wikipedia.org/wiki/List_of_Beidou_satellites" > "$@"
@@ -15,6 +15,9 @@ glonass.html: every/1hour
 
 galileo.html: every/1hour
 	curl -s "https://en.wikipedia.org/wiki/List_of_Galileo_satellites" > "$@"
+
+main.rss: $(systems)
+	./main_rss.pl > "$@"
 
 %: %.json
 	mkdir -p "$@"
