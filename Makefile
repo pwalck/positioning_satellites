@@ -16,15 +16,15 @@ glonass.html: every/1hour
 galileo.html: every/1hour
 	curl -s "https://en.wikipedia.org/wiki/List_of_Galileo_satellites" > "$@"
 
-main.rss: $(systems)
+main.rss: $(systems) main_rss.pl
 	./main_rss.pl > "$@"
 
-%: %.json
+%: %.json extract_satellite_info.pl
 	mkdir -p "$@"
 	./extract_satellite_info.pl "$@"
 	touch -r "$<" "$@"
 
-%.json: %.html
+%.json: %.html extract_json.pl
 	./extract_json.pl < "$<" > "$@"
 
 every/%:
