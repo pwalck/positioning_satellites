@@ -4,16 +4,16 @@ datafiles = $(tables:.html=.json)
 
 all: $(systems) clean
 
-beidou.html: every/2hours
+beidou.html: every/1hour
 	curl -s "https://en.wikipedia.org/wiki/List_of_Beidou_satellites" > "$@"
 
-gps.html: every/2hours
+gps.html: every/1hour
 	curl -s "https://en.wikipedia.org/wiki/List_of_GPS_satellites" > "$@"
 
-glonass.html: every/2hours
+glonass.html: every/1hour
 	curl -s "https://en.wikipedia.org/wiki/List_of_GLONASS_satellites" > "$@"
 
-galileo.html: every/2hours
+galileo.html: every/1hour
 	curl -s "https://en.wikipedia.org/wiki/List_of_Galileo_satellites" > "$@"
 
 %: %.json
